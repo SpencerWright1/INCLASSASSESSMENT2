@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eToursWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+892c250de0d9bc18e9fd81d0e4cbb89532285cd1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d9958b911a11cc3fd40b0b27e1487b74ae66ca3")]
 [assembly: System.Reflection.AssemblyProductAttribute("eToursWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eToursWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -76,7 +76,6 @@ Use the enum class to create the select control
     // Activity 3
 
     // add any require variables to process your form
-    // add any require variables to process your form
     string ExcursionName = "";
     string ExcursionDurationString = "0";
     DateTime ExcursionDate = DateTime.Today;
@@ -98,4 +97,59 @@ Use the enum class to create the select control
         return ex;
     }
 
-    
+    //Activity 3
+
+    // Add 1 event method for collecting, validating and saving data.
+    void SaveExcursion()
+    {
+        ErrorMsgs.Clear();
+        FeedbackMsg = "";
+
+        double duration;
+        if (!double.TryParse(ExcursionDurationString, out duration) || duration <= 0)
+        {
+            ErrorMsgs.Add("excursion time must be greater than 0.");
+        }
+
+        if (string.IsNullOrWhiteSpace(ExcursionName))
+        {
+            ErrorMsgs.Add("Name is needed.");
+        }
+
+        if (ExcursionDate < DateTime.Today)
+        {
+            ErrorMsgs.Add("start date cannot be in the past.");
+        }
+
+        if (ErrorMsgs.Count == 0)
+        {
+            try
+            {
+                ExcursionType type = Enum.Parse<ExcursionType>(ExcursionTypeValue);
+                var ex = new Excursion(ExcursionName, ExcursionDate, duration, type);
+
+                FeedbackMsg = "your data is now saved to the file.";
+            }
+            catch (Exception ex)
+            {
+                ErrorMsgs.Add(GetInnerException(ex).Message);
+            }
+        }
+    }
+
+    // Add 1 event method to clear the form. Must require confirmation from user as demonstrated in class.
+    async void ClearForm()
+    {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "clear form? unsaved changes will be lost.");
+        if (confirmed)
+        {
+            ExcursionName = "";
+            ExcursionDurationString = "0";
+            ExcursionDate = DateTime.Today;
+            ExcursionTypeValue = ExcursionType.Walk.ToString();
+            ErrorMsgs.Clear();
+            FeedbackMsg = "";
+        }
+    }
+}
+
