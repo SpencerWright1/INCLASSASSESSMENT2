@@ -35,6 +35,35 @@ Create the input form as shown in the Assment descritpion (exact layout is not r
 Use the enum class to create the select control
 
 -->
+<form>
+    <fieldset>
+        <div>
+            <label for="name">Excursion Name</label>
+            <input id="name" type="text" @bind="ExcursionName" />
+        </div>
+        <div>
+            <label for="duration">Excursion Duration in hours</label>
+            <input id="duration" type="number" @bind="ExcursionDurationString" />
+        </div>
+        <div>
+            <label for="date">Excursion Date</label>
+            <input id="date" type="date" @bind="ExcursionDate" />
+        </div>
+        <div>
+            <label for="type">Excursion Type</label>
+            <select id="type" @bind="ExcursionTypeValue">
+                @foreach (var type in Enum.GetValues(typeof(ExcursionType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+        <div style="margin-top:1em;">
+            <button type="button" @onclick="SaveExcursion">Submit</button>
+            <button type="button" @onclick="ClearForm" style="margin-left:1em;">Clear</button>
+        </div>
+    </fieldset>
+</form>
 
 
 @code {
@@ -47,7 +76,11 @@ Use the enum class to create the select control
     // Activity 3
 
     // add any require variables to process your form
-
+    // add any require variables to process your form
+    string ExcursionName = "";
+    string ExcursionDurationString = "0";
+    DateTime ExcursionDate = DateTime.Today;
+    string ExcursionTypeValue = ExcursionType.Walk.ToString();
 
     protected override void OnInitialized()
     { 
@@ -55,7 +88,7 @@ Use the enum class to create the select control
         // Activity 3
 
         // default excursion date to Today
-       
+        ExcursionDate = DateTime.Today;
     }
 
     Exception GetInnerException(Exception ex)
@@ -65,11 +98,4 @@ Use the enum class to create the select control
         return ex;
     }
 
-    //Activity 3
-
-    // Add 1 event method for collecting, validating and saving data.
-
-
-    // Add 1 event method to clear the form. Must require confirmation from user as demonstrated in class.
-
-}
+    
