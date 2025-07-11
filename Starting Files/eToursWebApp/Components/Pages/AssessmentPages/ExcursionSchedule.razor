@@ -1,0 +1,76 @@
+﻿@page "/schedule"
+
+<PageTitle>Excursion Schedule</PageTitle>
+@rendermode InteractiveServer
+
+@using eToursWebApp.Model
+
+<h1>Excursion Schedule</h1>
+
+@if (FeedbackMsg.Length > 0)
+{
+    <div class="alert alert-info">
+        <p>@FeedbackMsg</p>
+    </div>
+}
+
+@if (ErrorMsgs.Count > 0)
+{
+    <div class="alert alert-danger">
+        <p>Please fix the following issues:</p>
+        <ul>
+            @foreach (var error in ErrorMsgs)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<!--
+    Activity 2
+    create a table display for the data, see image in assessment specifications for layout
+    create separate messages if a) the data file does not exist
+                                b) the data file exists but is empty 
+-->
+
+
+@code {
+    string FeedbackMsg = "";
+    List<string> ErrorMsgs = new List<string>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        //test files for assessment
+
+        string filename = @"./Data/eTourGood.csv";
+        // string filename = @"./Data/eTourEmpty.csv";
+        //string filename = @"./Data/eTourGoodBad.csv";
+        // string filename = @"./Data/eTourNotThere.csv";
+
+        //Activity 2
+
+        //write the code to 
+        //  a) read the file
+		
+		
+		//  b) all records in the file must be handled, processed as good or bad
+		
+		
+        //  c) place good records in a collection to display in the table above
+		
+		
+        //  d) user friendly error handling is required.
+		
+        
+    }
+
+    Exception GetInnerException(Exception ex)
+    {
+        while (ex.InnerException != null)
+            ex = ex.InnerException;
+        return ex;
+    }
+}

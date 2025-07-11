@@ -1,0 +1,75 @@
+﻿@page "/collection"
+
+<PageTitle>Excursion Collection</PageTitle>
+@rendermode InteractiveServer
+
+@using eToursWebApp.Model;
+
+
+<h1>Excursion Collection</h1>
+
+@if (FeedbackMsg.Length > 0)
+{
+    <div class="alert alert-info">
+        <p>@FeedbackMsg</p>
+    </div>
+}
+
+@if (ErrorMsgs.Count > 0)
+{
+    <div class="alert alert-danger">
+        <p>Please fix the following issues:</p>
+        <ul>
+            @foreach (var error in ErrorMsgs)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<!-- 
+Activity 3
+
+Create the input form as shown in the Assment descritpion (exact layout is not required)
+Use the enum class to create the select control
+
+-->
+
+
+@code {
+    string FeedbackMsg = "";
+    List<string> ErrorMsgs = new List<string>();
+
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
+
+    // Activity 3
+
+    // add any require variables to process your form
+
+
+    protected override void OnInitialized()
+    { 
+        base.OnInitialized();
+        // Activity 3
+
+        // default excursion date to Today
+       
+    }
+
+    Exception GetInnerException(Exception ex)
+    {
+        while (ex.InnerException != null)
+            ex = ex.InnerException;
+        return ex;
+    }
+
+    //Activity 3
+
+    // Add 1 event method for collecting, validating and saving data.
+
+
+    // Add 1 event method to clear the form. Must require confirmation from user as demonstrated in class.
+
+}
