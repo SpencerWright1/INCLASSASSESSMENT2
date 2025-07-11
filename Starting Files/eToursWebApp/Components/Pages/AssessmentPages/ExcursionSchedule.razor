@@ -33,11 +33,43 @@
     create separate messages if a) the data file does not exist
                                 b) the data file exists but is empty 
 -->
+@if (Excursions.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var excursion in Excursions)
+            {
+                <tr>
+                    <td>@excursion.Name</td>
+                    <td>@excursion.ExcursionDate.ToString("MMM-dd-yyyy")</td>
+                    <td>@excursion.Duration</td>
+                    <td>@excursion.TourType</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Display of excursions
+    </div>
+}
 
 
 @code {
     string FeedbackMsg = "";
     List<string> ErrorMsgs = new List<string>();
+    List<Excursion> Excursions = new();
+
 
     protected override void OnInitialized()
     {
@@ -54,17 +86,42 @@
 
         //write the code to 
         //  a) read the file
-		
-		
 		//  b) all records in the file must be handled, processed as good or bad
-		
-		
         //  c) place good records in a collection to display in the table above
-		
-		
         //  d) user friendly error handling is required.
-		
-        
+        try
+        {
+            if (!File.Exists(filename))
+            {
+                ErrorMsgs.Add("The data file does not exist.");
+                return;
+            }
+
+            var lines = File.ReadAllLines(filename);
+            if (lines.Length == 0)
+            {
+                ErrorMsgs.Add("The data file is empty.");
+                return;
+            }
+
+            foreach (var line in lines)
+            {
+                try
+                {
+                    var ex = Excursion.Parse(line);
+                    Excursions.Add(ex);
+                }
+                catch (Exception ex)
+                {
+                    ErrorMsgs.Add(ex.Message);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMsgs.Add(GetInnerException(ex).Message);
+        }
+
     }
 
     Exception GetInnerException(Exception ex)
